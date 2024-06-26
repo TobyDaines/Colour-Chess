@@ -148,6 +148,13 @@ def check_options(pieces, locations, turn):
     return all_moves_list
 
 
+# Check valid king moves
+def check_king(position, color):
+    moves_list= []
+
+    return moves_list
+
+
 # Check valid queen moves
 def check_queen(position, color):
     moves_list = check_bishop(position, color)
