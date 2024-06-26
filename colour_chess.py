@@ -151,7 +151,13 @@ def check_options(pieces, locations, turn):
 # Check valid king moves
 def check_king(position, color):
     moves_list= []
-
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else:
+        friends_list = black_locations
+        enemies_list = white_locations
+        
     return moves_list
 
 
