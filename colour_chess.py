@@ -335,15 +335,15 @@ def draw_check():
             if king_location in black_options[i]:
                 if counter < 15:
                     pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
-                                                          white_locations[king_index[1] * 100 + 1, 1, 1], 5])
+                                                          white_locations[king_index][1] * 100 + 1, 100, 100], 5)
     else:
-        king_index = _pieces.index('king')
-        king_location = white_locations[king_index]
-        for i in range(len(black_options)):
-            if king_location in black_options[i]:
+        king_index = black_pieces.index('king')
+        king_location = black_locations[king_index]
+        for i in range(len(white_options)):
+            if king_location in white_options[i]:
                 if counter < 15:
-                    pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
-                                                          white_locations[king_index[1] * 100 + 1, 1, 1], 5])
+                    pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
+                                                          black_locations[king_index][1] * 100 + 1, 100, 100], 5)
 # Main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
