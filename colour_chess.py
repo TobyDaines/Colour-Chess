@@ -78,8 +78,7 @@ small_black_images = [black_pawn_small, black_queen_small, black_king_small, bla
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 
 #Check variables/flashing counter
-
-
+counter = 0
 
 # Draw main game board
 def draw_board():
@@ -99,6 +98,7 @@ def draw_board():
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
+
 
 # Draw pieces onto board
 def draw_pieces():
@@ -326,16 +326,39 @@ def draw_captured():
         screen.blit(small_white_images[index], (925, 5 + 50*i))
 
 
+# Draw a flashing square around king if in check
+def draw_check():
+    if turn_step < 2:
+        king_index = white_pieces.index('king')
+        king_location = white_locations[king_index]
+        for i in range(len(black_options)):
+            if king_location in black_options[i]:
+                if counter < 15:
+                    pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
+                                                          white_locations[king_index[1] * 100 + 1, 1, 1], 5])
+    else:
+        king_index = _pieces.index('king')
+        king_location = white_locations[king_index]
+        for i in range(len(black_options)):
+            if king_location in black_options[i]:
+                if counter < 15:
+                    pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
+                                                          white_locations[king_index[1] * 100 + 1, 1, 1], 5])
 # Main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
 run = True
 while run:
     timer.tick(fps)
+    if counter < 30:
+        counter += 1
+    else:
+        counter = 0
     screen.fill('dark gray')
     draw_board()
     draw_pieces()
     draw_captured()
+    draw_check()
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)
