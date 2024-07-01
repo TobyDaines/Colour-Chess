@@ -80,6 +80,8 @@ piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 #Check variables/flashing counter
 counter = 0
 winner = ''
+game_over = False
+
 
 # Draw main game board
 def draw_board():
@@ -347,6 +349,15 @@ def draw_check():
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
+
+
+# Game over condition
+def draw_game_over():
+    pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
+    screen.blit(font.render(f'{winner} won the game!', True, 'white'), (210, 210))
+    screen.blit(font.render(f'Press ENTER to Restart', True, 'white'), (210, 240))
+
+
 # Main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
@@ -370,7 +381,7 @@ while run:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1 and not game_over:
             x_coord = event.pos[0] // 100
             y_coord = event.pos[1] // 100
             click_coords = (x_coord, y_coord)
@@ -412,6 +423,10 @@ while run:
                     turn_step = 0
                     selection = 100
                     valid_moves = []
-                    
+
+    if winner != '':
+        game_over = True
+        draw_game_over()
+
     pygame.display.flip()
 pygame.quit()
