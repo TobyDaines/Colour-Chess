@@ -79,6 +79,7 @@ piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 
 #Check variables/flashing counter
 counter = 0
+winner = ''
 
 # Draw main game board
 def draw_board():
@@ -329,21 +330,23 @@ def draw_captured():
 # Draw a flashing square around king if in check
 def draw_check():
     if turn_step < 2:
-        king_index = white_pieces.index('king')
-        king_location = white_locations[king_index]
-        for i in range(len(black_options)):
-            if king_location in black_options[i]:
-                if counter < 15:
-                    pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
-                                                          white_locations[king_index][1] * 100 + 1, 100, 100], 5)
+        if 'king' in white_pieces:
+            king_index = white_pieces.index('king')
+            king_location = white_locations[king_index]
+            for i in range(len(black_options)):
+                if king_location in black_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
+                                                              white_locations[king_index][1] * 100 + 1, 100, 100], 5)
     else:
-        king_index = black_pieces.index('king')
-        king_location = black_locations[king_index]
-        for i in range(len(white_options)):
-            if king_location in white_options[i]:
-                if counter < 15:
-                    pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
-                                                          black_locations[king_index][1] * 100 + 1, 100, 100], 5)
+        if 'king' in black_pieces:
+            king_index = black_pieces.index('king')
+            king_location = black_locations[king_index]
+            for i in range(len(white_options)):
+                if king_location in white_options[i]:
+                    if counter < 15:
+                        pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
+                                                               black_locations[king_index][1] * 100 + 1, 100, 100], 5)
 # Main game loop
 black_options = check_options(black_pieces, black_locations, 'black')
 white_options = check_options(white_pieces, white_locations, 'white')
@@ -381,6 +384,8 @@ while run:
                     if click_coords in black_locations:
                         black_piece = black_locations.index(click_coords)
                         captured_pieces_white.append(black_pieces[black_piece])
+                        if black_pieces[black_piece] == 'king':
+                            winner = 'white'
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
                     black_options = check_options(black_pieces, black_locations, 'black')
@@ -398,6 +403,8 @@ while run:
                     if click_coords in white_locations:
                         white_piece = white_locations.index(click_coords)
                         captured_pieces_black.append(white_pieces[white_piece])
+                        if white_pieces[white_piece] == 'king':
+                            winner = 'black'
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
                     black_options = check_options(black_pieces, black_locations, 'black')
