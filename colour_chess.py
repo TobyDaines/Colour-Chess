@@ -9,6 +9,7 @@ HEIGHT = 900
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 pygame.display.set_caption('Two-Player Pygame Chess!')
 font = pygame.font.Font('freesansbold.ttf', 20)
+medium_font = pygame.font.Font('freesansbold.ttf', 40)
 big_font = pygame.font.Font('freesansbold.ttf', 50)
 timer = pygame.time.Clock()
 fps = 60
@@ -101,6 +102,7 @@ def draw_board():
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
+        screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
 
 
 # Draw pieces onto board
