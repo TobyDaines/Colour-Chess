@@ -102,7 +102,7 @@ def draw_board():
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
-        screen.blit(medium_font.render('FORFEIT', True, 'black'), (810, 830))
+        screen.blit(medium_font.render('Resign', True, 'black'), (810, 830))
 
 
 # Draw pieces onto board
@@ -388,6 +388,8 @@ while run:
             y_coord = event.pos[1] // 100
             click_coords = (x_coord, y_coord)
             if turn_step <= 1:
+                if click_coords == (8, 8) or (9, 8):
+                    winner == 'black'
                 if click_coords in white_locations:
                     selection = white_locations.index(click_coords)
                     if turn_step == 0:
@@ -407,6 +409,8 @@ while run:
                     selection = 100
                     valid_moves = []
             if turn_step > 1:
+                if click_coords == (8, 8) or (9, 8):
+                    winner == 'white'
                 if click_coords in black_locations:
                     selection = black_locations.index(click_coords)
                     if turn_step == 2:
