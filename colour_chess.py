@@ -389,7 +389,7 @@ while run:
             click_coords = (x_coord, y_coord)
             if turn_step <= 1:
                 if click_coords == (8, 8) or (9, 8):
-                    winner == 'black'
+                    winner = 'black'
                 if click_coords in white_locations:
                     selection = white_locations.index(click_coords)
                     if turn_step == 0:
@@ -410,7 +410,7 @@ while run:
                     valid_moves = []
             if turn_step > 1:
                 if click_coords == (8, 8) or (9, 8):
-                    winner == 'white'
+                    winner = 'white'
                 if click_coords in black_locations:
                     selection = black_locations.index(click_coords)
                     if turn_step == 2:
