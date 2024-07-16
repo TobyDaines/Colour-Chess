@@ -212,7 +212,7 @@ def check_ep(old_coords, new_coords):
     else:
         index = black_locations.index(old_coords)
         ep_coords = (new_coords[0], new_coords[1] + 1)
-        piece = white_pieces[index]
+        piece = black_pieces[index]
     if piece == 'pawn' and abs(old_coords[1] - new_coords[1]) > 1:
         # If piece was pawn and moved two spaces, return EP coords as defined above
         pass
@@ -335,6 +335,7 @@ while run:
                     if turn_step == 0:
                         turn_step = 1
                 if click_coords in valid_moves and selection != 100:
+                    white_ep = check_ep(white_locations[selection], click_coords)
                     white_locations[selection] = click_coords
                     if click_coords in black_locations:
                         black_piece = black_locations.index(click_coords)
@@ -356,6 +357,7 @@ while run:
                     if turn_step == 2:
                         turn_step = 3
                 if click_coords in valid_moves and selection != 100:
+                    black_ep = check_ep(black_locations[selection], click_coords)
                     black_locations[selection] = click_coords
                     if click_coords in white_locations:
                         white_piece = white_locations.index(click_coords)
