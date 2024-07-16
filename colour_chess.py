@@ -207,6 +207,18 @@ def check_pawn(position, color):
 def check_ep(old_coords, new_coords):
     if turn_step <= 1:
         index = white_locations.index(old_coords)
+        ep_coords = (new_coords[0], new_coords[1] - 1)
+        piece = white_pieces[index]
+    else:
+        index = black_locations.index(old_coords)
+        ep_coords = (new_coords[0], new_coords[1] + 1)
+        piece = white_pieces[index]
+    if piece == 'pawn' and abs(old_coords[1] - new_coords[1]) > 1:
+        # If piece was pawn and moved two spaces, return EP coords as defined above
+        pass
+    else:
+        ep_coords = (100, 100)
+    return ep_coords
 
 
 # Check valid knight moves
