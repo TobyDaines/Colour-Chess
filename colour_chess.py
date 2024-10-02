@@ -326,6 +326,22 @@ def check_promotion():
             promote_index = pawn_indexes[i]
     return white_promotion, black_promotion, promote_index
 
+def draw_promotion():
+    pygame.draw.rect(screen, 'dark gray', [800, 0, 200, 420])
+    if white_promote:
+        color = 'white'
+        for i in range(len(white_promotions)):
+            piece = white_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(white_images[index], (860, 5 + 100 * i))
+    elif black_promote:
+        color = 'black'
+        for i in range(len(black_promotions)):
+            piece = black_promotions[i]
+            index = piece_list.index(piece)
+            screen.blit(black_images[index], (860, 5 + 100 * i))
+    pygame.draw.rect(screen, color, [800, 0, 200, 420], 8)
+
 # Game over condition
 def draw_game_over():
     pygame.draw.rect(screen, 'black', [200, 200, 400, 70])
@@ -348,6 +364,11 @@ while run:
     draw_pieces()
     draw_captured()
     draw_check()
+    if not game_over:
+        white_promote, black_promote, promo_index = check_promotion()
+        if white_promote or black_promote:
+            draw_promotion()
+            #check_promo_select()
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)
