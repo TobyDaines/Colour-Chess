@@ -25,6 +25,10 @@ def draw_board():
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800), 2)
         screen.blit(medium_font.render('Resign', True, 'black'), (810, 830))
+        if white_promote or black_promote:
+            pygame.draw.rect(screen, 'gray', [0, 800, WIDTH - 200, 100])
+            pygame.draw.rect(screen, 'gold', [0, 800, WIDTH - 200, 100], 5)
+            screen.blit(big_font.render('Select a Piece for Promotion', True, 'black'), (20, 820))
 
 
 # Draw pieces onto board
