@@ -285,7 +285,7 @@ def draw_captured():
         screen.blit(small_white_images[index], (925, 5 + 50*i))
 
 
-# Draw a flashing square around king if in check
+# Draw a flashing square around king when in check
 def draw_check():
     if turn_step < 2:
         if 'king' in white_pieces:
