@@ -330,6 +330,8 @@ def check_promotion():
             promote_index = pawn_indexes[i]
     return white_promotion, black_promotion, promote_index
 
+
+# Function to draw the promotion options on the board
 def draw_promotion():
     pygame.draw.rect(screen, 'dark gray', [800, 0, 200, 420])
     if white_promote:
@@ -345,6 +347,19 @@ def draw_promotion():
             index = piece_list.index(piece)
             screen.blit(black_images[index], (860, 5 + 100 * i))
     pygame.draw.rect(screen, color, [800, 0, 200, 420], 8)
+
+
+# Function that allows the player to select a piece for pawn promotion
+def check_promo_select():
+    mouse_pos = pygame.mouse.get_pos()
+    left_click = pygame.mouse.get_pressed()[0]
+    x_pos = mouse_pos[0] // 100
+    y_pos = mouse_pos[1] // 100
+    if white_promote and left_click and x_pos > 7 and y_pos < 4:
+        white_pieces[promo_index] = white_promotions[y_pos]
+    elif black_promote and left_click and x_pos > 7 and y_pos < 4:
+        black_pieces[promo_index] = black_promotions[y_pos]
+
 
 # Game over condition
 def draw_game_over():
@@ -372,7 +387,7 @@ while run:
         white_promote, black_promote, promo_index = check_promotion()
         if white_promote or black_promote:
             draw_promotion()
-            #check_promo_select()
+            check_promo_select()
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)
