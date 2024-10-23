@@ -56,7 +56,7 @@ def draw_pieces():
                                                  100, 100], 2)
 
 
-# Function to check all pieces valid options on board
+# Function to check valid options of all pieces on board
 def check_options(pieces, locations, turn):
     moves_list = []
     all_moves_list = []
