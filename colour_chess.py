@@ -405,11 +405,13 @@ while run:
                     winner = 'black'
                 if click_coords in white_locations:
                     selection = white_locations.index(click_coords)
+                    # Check what piece is selected, so you can only draw castling moves if king is selected
                     if turn_step == 0:
                         turn_step = 1
                 if click_coords in valid_moves and selection != 100:
                     white_ep = check_ep(white_locations[selection], click_coords)
                     white_locations[selection] = click_coords
+                    white_moved[selection] = True
                     if click_coords in black_locations:
                         black_piece = black_locations.index(click_coords)
                         captured_pieces_white.append(black_pieces[black_piece])
@@ -417,12 +419,14 @@ while run:
                             winner = 'white'
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
+                        black_moved.pop(black_piece)
                     # Adding check if en passant pawn was captured
                     if click_coords == black_ep:
                         black_piece = black_locations.index((black_ep[0], black_ep[1] - 1))
                         captured_pieces_white.append(black_pieces[black_piece])  
                         black_pieces.pop(black_piece)
                         black_locations.pop(black_piece)
+                        black_moved.pop(black_piece)
                     black_options = check_options(black_pieces, black_locations, 'black')
                     white_options = check_options(white_pieces, white_locations, 'white')
                     turn_step = 2
@@ -438,6 +442,7 @@ while run:
                 if click_coords in valid_moves and selection != 100:
                     black_ep = check_ep(black_locations[selection], click_coords)
                     black_locations[selection] = click_coords
+                    black_moved[selection] = True
                     if click_coords in white_locations:
                         white_piece = white_locations.index(click_coords)
                         captured_pieces_black.append(white_pieces[white_piece])
@@ -445,11 +450,13 @@ while run:
                             winner = 'black'
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
+                        white_moved.pop(white_piece)
                     if click_coords == white_ep:
                         white_piece = white_locations.index((white_ep[0], white_ep[1] + 1))
                         captured_pieces_black.append(white_pieces[white_piece])
                         white_pieces.pop(white_piece)
                         white_locations.pop(white_piece)
+                        white_moved.pop(white_piece)
                     black_options = check_options(black_pieces, black_locations, 'black')
                     white_options = check_options(white_pieces, white_locations, 'white')
                     turn_step = 0
