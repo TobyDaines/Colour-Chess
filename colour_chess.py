@@ -307,6 +307,10 @@ def draw_check():
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
 
 
+# Add Castling
+
+
+
 # Add pawn promotion
 def check_promotion():
     pawn_indexes = []
@@ -406,6 +410,7 @@ while run:
                 if click_coords in white_locations:
                     selection = white_locations.index(click_coords)
                     # Check what piece is selected, so you can only draw castling moves if king is selected
+                    selected_piece = white_pieces[selection]
                     if turn_step == 0:
                         turn_step = 1
                 if click_coords in valid_moves and selection != 100:
@@ -437,6 +442,8 @@ while run:
                     winner = 'white'
                 if click_coords in black_locations:
                     selection = black_locations.index(click_coords)
+                    # Check what piece is selected, so you can only draw castling moves if king is selected
+                    selected_piece = black_pieces[selection]
                     if turn_step == 2:
                         turn_step = 3
                 if click_coords in valid_moves and selection != 100:
