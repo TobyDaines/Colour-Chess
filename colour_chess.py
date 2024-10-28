@@ -308,7 +308,14 @@ def draw_check():
 
 
 # Add Castling
-
+def check_castling():
+    # King must not currently be in check, neither the rook nor king has moved previously, nothing between the two
+    # and the king does not pass through or finish on an attacked piece
+    castle_moves = [] # Store each valid castle move as [((king_coords), (castle_coords))]
+    rook_indexes = []
+    rook_locations = []
+    king_index = 0
+    king_pos = (0, 0)
 
 
 # Add pawn promotion
