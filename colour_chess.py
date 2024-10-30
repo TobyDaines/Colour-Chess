@@ -316,6 +316,15 @@ def check_castling():
     rook_locations = []
     king_index = 0
     king_pos = (0, 0)
+    if turn_step > 1:
+        for i in range(len(white_pieces)):
+            if white_pieces[i] == 'rook':
+                rook_indexes.append(white_moved[i])
+                rook_locations.append(white_locations[i])
+            if white_pieces[i] == 'king':
+                king_index = i
+                king_pos = white_locations[i]
+        if not white_moved[king_index] and False in rook_indexes and not check:
 
 
 # Add pawn promotion
