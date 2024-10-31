@@ -273,7 +273,7 @@ def draw_valid(moves):
         pygame.draw.circle(screen, color, (moves[i][0] * 100 + 50, moves[i][1] * 100 + 50), 5)
 
 
-# Draw captured pieces on side of screen
+# Draw the captured pieces on side of screen
 def draw_captured():
     for i in range(len(captured_pieces_white)):
         captured_piece = captured_pieces_white[i]
