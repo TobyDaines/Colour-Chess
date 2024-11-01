@@ -325,6 +325,13 @@ def check_castling():
                 king_index = i
                 king_pos = white_locations[i]
         if not white_moved[king_index] and False in rook_indexes and not check:
+            for i in range(len(rook_indexes)):
+                castle = True
+                if rook_locations[i][0] > king_pos[0]:
+                    empty_squares = [(king_pos[0] + 1, king_pos[1]), (king_pos[0] + 2, king_pos[1]),
+                                     (king_pos[0] + 3, king_pos[1])]
+                else:
+                    empty_squares = [(king_pos[0] - 1, king_pos[1]), (king_pos[0] - 2, king_pos[1])]
 
 
 # Add pawn promotion
