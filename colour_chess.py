@@ -287,12 +287,15 @@ def draw_captured():
 
 # Draw a flashing square around king when in check
 def draw_check():
+    global check
+    check = False
     if turn_step < 2:
         if 'king' in white_pieces:
             king_index = white_pieces.index('king')
             king_location = white_locations[king_index]
             for i in range(len(black_options)):
                 if king_location in black_options[i]:
+                    check = True
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
                                                               white_locations[king_index][1] * 100 + 1, 100, 100], 5)
@@ -302,6 +305,7 @@ def draw_check():
             king_location = black_locations[king_index]
             for i in range(len(white_options)):
                 if king_location in white_options[i]:
+                    check = True
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
@@ -332,6 +336,35 @@ def check_castling():
                                      (king_pos[0] + 3, king_pos[1])]
                 else:
                     empty_squares = [(king_pos[0] - 1, king_pos[1]), (king_pos[0] - 2, king_pos[1])]
+                for j in range(len(empty_squares)):
+                    if empty_squares[j] in white_locations or empty_squares[j] in black_locations or\
+                    empty_squares[j] in black_options or rook_indexes[i]:
+                        castle = False
+                if castle:
+                    castle_moves.append((empty_squares[1], empty_squares[0]))
+    else:
+        for i in range(len(black_pieces)):
+            if black_pieces[i] == 'rook':
+                rook_indexes.append(black_moved[i])
+                rook_locations.append(black_locations[i])
+            if black_pieces[i] == 'king':
+                king_index = i
+                king_pos = black_locations[i]
+        if not black_moved[king_index] and False in rook_indexes and not check:
+            for i in range(len(rook_indexes)):
+                castle = True
+                if rook_locations[i][0] > king_pos[0]:
+                    empty_squares = [(king_pos[0] + 1, king_pos[1]), (king_pos[0] + 2, king_pos[1]),
+                                     (king_pos[0] + 3, king_pos[1])]
+                else:
+                    empty_squares = [(king_pos[0] - 1, king_pos[1]), (king_pos[0] - 2, king_pos[1])]
+                for j in range(len(empty_squares)):
+                    if empty_squares[j] in black_locations or empty_squares[j] in black_locations or\
+                    empty_squares[j] in white_options or rook_indexes[i]:
+                        castle = False
+                if castle:
+                    castle_moves.append((empty_squares[1], empty_squares[0]))
+    return castle_moves
 
 
 # Add pawn promotion
