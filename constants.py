@@ -90,3 +90,4 @@ black_ep = (100, 100)
 white_promote = False
 black_promote = False
 promo_index = 100
+check = False
