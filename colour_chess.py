@@ -58,8 +58,10 @@ def draw_pieces():
 
 # Function to check the valid options of all pieces on board
 def check_options(pieces, locations, turn):
+    global castling_moves
     moves_list = []
     all_moves_list = []
+    castling_moves = []
     for i in range((len(pieces))):
         location = locations[i]
         piece = pieces[i]
@@ -74,7 +76,7 @@ def check_options(pieces, locations, turn):
         elif piece == 'queen':
             moves_list = check_queen(location, turn)
         elif piece == 'king':
-            moves_list = check_king(location, turn)
+            moves_list, castling_moves = check_king(location, turn)
         all_moves_list.append(moves_list)
     return all_moves_list
 
@@ -82,6 +84,7 @@ def check_options(pieces, locations, turn):
 # Check valid king moves
 def check_king(position, color):
     moves_list= []
+    castle_moves = check_castling()
     if color == 'white':
         enemies_list = black_locations
         friends_list = white_locations
@@ -94,7 +97,7 @@ def check_king(position, color):
         target = (position[0] + targets[i][0], position[1] + targets[i][1])
         if target not in friends_list and 0 <= target[0] <=7 and 0 <= target[1] <=7:
             moves_list.append(target)
-    return moves_list
+    return moves_list, castle_moves
 
 
 # Check valid queen moves
