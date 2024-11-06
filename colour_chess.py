@@ -370,6 +370,21 @@ def check_castling():
     return castle_moves
 
 
+# Draw castling function
+def draw_castling(moves):
+    if turn_step < 2:
+        color = 'red'
+    else:
+        color = 'blue'
+    for i in range(len(moves)):
+        pygame.draw.circle(screen, color, (moves[i][0][0] * 100 + 50, moves[i][0][1] * 100 + 70), 8)
+        screen.blit(font.render('king', True, 'black'), (moves[i][0][0] * 100 + 30, moves[i][0][1] * 100 + 70))
+        pygame.draw.circle(screen, color, (moves[i][1][0] * 100 + 50, moves[i][1][1] * 100 + 70), 8)
+        screen.blit(font.render('rook', True, 'black'), (moves[i][1][0] * 100 + 30, moves[i][1][1] * 100 + 70))
+        pygame.draw.line(screen, color, (moves[i][0][0] * 100 + 50, moves[i][0][1] * 100 + 70), 
+                         (moves[i][1][0] * 100 + 50, moves[i][1][1] * 100 + 70), 2)
+
+
 # Add pawn promotion
 def check_promotion():
     pawn_indexes = []
@@ -454,7 +469,8 @@ while run:
     if selection != 100:
         valid_moves = check_valid_moves()
         draw_valid(valid_moves)
-
+        if selected_piece == 'king':
+            draw_castling(castling_moves)
     # Event handling
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
