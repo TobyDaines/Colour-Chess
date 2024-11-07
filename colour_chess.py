@@ -512,6 +512,18 @@ while run:
                     turn_step = 2
                     selection = 100
                     valid_moves = []
+                # add option to castle
+                elif selection != 100:
+                    for q in range(len(castling_moves)):
+                        if click_coords == castling_moves[q][0]:
+                            white_locations[selection] = click_coords
+                            white_moved = True
+                            if click_coords == (1, 0):
+                                rook_coords = (0, 0)
+                            else:
+                                rook_coords = (7, 0)
+                            rook_index = white_locations.index(rook_coords)
+                            white_locations[rook_index] = castling_moves[q][1]
             if turn_step > 1:
                 if click_coords == (8, 8) or click_coords == (9, 8):
                     winner = 'white'
