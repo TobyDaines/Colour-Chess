@@ -524,6 +524,11 @@ while run:
                                 rook_coords = (7, 0)
                             rook_index = white_locations.index(rook_coords)
                             white_locations[rook_index] = castling_moves[q][1]
+                    black_options = check_options(black_pieces, black_locations, 'black')
+                    white_options = check_options(white_pieces, white_locations, 'white')
+                    turn_step = 2
+                    selection = 100
+                    valid_moves = []
             if turn_step > 1:
                 if click_coords == (8, 8) or click_coords == (9, 8):
                     winner = 'white'
