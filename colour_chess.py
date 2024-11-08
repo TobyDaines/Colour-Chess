@@ -517,7 +517,7 @@ while run:
                     for q in range(len(castling_moves)):
                         if click_coords == castling_moves[q][0]:
                             white_locations[selection] = click_coords
-                            white_moved = True
+                            white_moved[selection] = True
                             if click_coords == (1, 0):
                                 rook_coords = (0, 0)
                             else:
@@ -561,6 +561,23 @@ while run:
                     turn_step = 0
                     selection = 100
                     valid_moves = []
+                # add option to castle
+                elif selection != 100:
+                    for q in range(len(castling_moves)):
+                        if click_coords == castling_moves[q][0]:
+                            black_locations[selection] = click_coords
+                            black_moved[selection] = True
+                            if click_coords == (1, 7):
+                                rook_coords = (0, 7)
+                            else:
+                                rook_coords = (7, 7)
+                            rook_index = black_locations.index(rook_coords)
+                            black_locations[rook_index] = castling_moves[q][1]
+                            black_options = check_options(black_pieces, black_locations, 'black')
+                            white_options = check_options(white_pieces, white_locations, 'white')
+                            turn_step = 0
+                            selection = 100
+                            valid_moves = []
         if event.type == pygame.KEYDOWN and game_over:
             if event.key == pygame.K_RETURN:
                 game_over = False
