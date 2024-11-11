@@ -81,7 +81,7 @@ small_black_images = [black_pawn_small, black_queen_small, black_king_small, bla
 
 piece_list = ['pawn', 'queen', 'king', 'knight', 'rook', 'bishop']
 
-#Check variables/flashing counter
+# Check variables/flashing counter
 counter = 0
 winner = ''
 game_over = False
