@@ -256,7 +256,7 @@ def check_knight(position, color):
     return moves_list
 
 
-# Check for valid moves for just selected piece
+# Check valid moves for just selected piece
 def check_valid_moves():
     if turn_step < 2:
         options_list = white_options
@@ -314,7 +314,7 @@ def draw_check():
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
 
 
-# Add Castling
+# Check valid castling moves
 def check_castling():
     # King must not currently be in check, neither the rook nor king has moved previously, nothing between the two
     # and the king does not pass through or finish on an attacked piece
@@ -385,7 +385,7 @@ def draw_castling(moves):
                          (moves[i][1][0] * 100 + 50, moves[i][1][1] * 100 + 70), 2)
 
 
-# Add pawn promotion
+# Check for valid pawn promotion
 def check_promotion():
     pawn_indexes = []
     white_promotion = False
