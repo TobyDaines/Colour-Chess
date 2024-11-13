@@ -1,5 +1,6 @@
 # Two player chess in python with Pygame
-# part one, set up variables images and game loop
+# Next plan is to add additional colours to the game
+# to create colour chess, and alter checking in the game
 
 import pygame
 from constants import *
