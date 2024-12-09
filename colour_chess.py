@@ -291,8 +291,9 @@ def draw_captured():
 
 # Draw a flashing square around king when in check
 def draw_check():
-    global check
+    global check, check_threat
     check = False
+    check_threat = None # Stores the piece and position causing the check
     if turn_step < 2:
         if 'king' in white_pieces:
             king_index = white_pieces.index('king')
@@ -300,6 +301,7 @@ def draw_check():
             for i in range(len(black_options)):
                 if king_location in black_options[i]:
                     check = True
+                    check_threat = (black_pieces[i], black_locations[i])  # Attacking piece and position
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark red', [white_locations[king_index][0] * 100 + 1,
                                                               white_locations[king_index][1] * 100 + 1, 100, 100], 5)
@@ -310,6 +312,7 @@ def draw_check():
             for i in range(len(white_options)):
                 if king_location in white_options[i]:
                     check = True
+                    check_threat = (white_pieces[i], white_locations[i])  # Attacking piece and position
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
