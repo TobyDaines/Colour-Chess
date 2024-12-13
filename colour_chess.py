@@ -259,11 +259,32 @@ def check_knight(position, color):
 
 # Check valid moves for just selected piece
 def check_valid_moves():
+    global check_threat, check
     if turn_step < 2:
         options_list = white_options
+        king_location = white_locations[white_pieces.index('king')]
     else:
         options_list = black_options
-    valid_options = options_list[selection]
+        king_location = black_locations[black_pieces.index('king')]
+
+    if not check:  # If not in check, return all valid moves
+        valid_options = options_list[selection]
+    else:
+        valid_options = []
+        if selected_piece == 'king':
+            # Only allow king moves that take it out of check
+            valid_options = [move for move in options_list[selection]
+                             if move not in (black_options if turn_step < 2 else white_options)]
+        else:
+            # Allow capturing the threat
+            if check_threat:
+                threat_position = check_threat[1]
+                valid_options = [move for move in options_list[selection] if move == threat_position]
+            # Allow blocking the threat (only if it's a sliding piece like bishop, rook, or queen)
+            if check_threat and check_threat[0] in ['bishop', 'rook', 'queen']:
+                threat_position = check_threat[1]
+                blocking_squares = get_blocking_squares(king_location, threat_position)
+                valid_options += [move for move in options_list[selection] if move in blocking_squares]
     return valid_options
 
 
@@ -316,6 +337,21 @@ def draw_check():
                     if counter < 15:
                         pygame.draw.rect(screen, 'dark blue', [black_locations[king_index][0] * 100 + 1,
                                                                black_locations[king_index][1] * 100 + 1, 100, 100], 5)
+
+
+# Function to get squares to block the king when in check
+def get_blocking_squares(king_position, threat_position):
+    blocking_squares = []
+    dx = threat_position[0] - king_position[0]
+    dy = threat_position[1] - king_position[1]
+    step_x = dx // abs(dx) if dx != 0 else 0
+    step_y = dy // abs(dy) if dy != 0 else 0
+
+    current_position = (king_position[0] + step_x, king_position[1] + step_y)
+    while current_position != threat_position:
+        blocking_squares.append(current_position)
+        current_position = (current_position[0] + step_x, current_position[1] + step_y)
+    return blocking_squares
 
 
 # Check valid castling moves
